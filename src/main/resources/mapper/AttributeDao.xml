@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hhr.dao.AttributeDao">
+
+    <insert id="insertAttribute">
+        <!-- 向attribute表中插入记录，数据库已设置默认值，故只插入accountid -->
+        <!-- ignore 主键冲突，报错 -->
+        INSERT ignore
+        INTO attribute(accountid)
+        VALUES (#{accountid})
+        <!-- #{@Param指定的对应名字} -->
+        <!-- insert自动返回插入的行数 -->
+    </insert>
+
+    <select id="queryAttribute" resultType="Attribute">
+        <!-- 查询attribute表中此账户id对应的记录，即玩家属性 -->
+        <!-- 如何告诉MyBatis把结果映射到Attribute -->
+        <!-- 可以自由控制SQL -->
+        SELECT *
+        FROM attribute
+        WHERE accountid = #{accountid}
+        <!-- select需要指定返回类型 -->
+        <!-- #{@Param指定的对应名字} -->
+    </select>
+
+    <update id="updateAttribute">
+        <!-- 更新attribute表中账户id对应的记录，即玩家属性 -->
+        UPDATE attribute
+        SET `level` = #{level}, title = #{title}, exnow = #{exnow},
+        exneed = #{exneed}, vip = #{vip}, hp = #{hp},
+        atk = #{atk}, def = #{def}, sp = #{sp}
+        WHERE accountid = #{accountid}
+        <!-- update自动返回修改的行数 -->
+    </update>
+
+</mapper>
